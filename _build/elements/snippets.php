@@ -13,7 +13,7 @@ return [
                 'type' => 'textfield',
                 'value' => 'tlogin_logout',
             ],
-            
+
         ],
     ],
 ];
