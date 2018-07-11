@@ -10,5 +10,10 @@ return [
         'xtype' => 'textfield',
         'value' => '',
         'area' => 'tlogin_main'
-    ]
+    ],
+    'tLogin_bot_name' => [
+        'xtype' => 'textfield',
+        'value' => '',
+        'area' => 'tlogin_main'
+    ],
 ];
