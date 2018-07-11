@@ -3,36 +3,17 @@
 return [
     'tLogin' => [
         'file' => 'tlogin',
-        'description' => 'tLogin snippet to list items',
+        'description' => '',
         'properties' => [
-            'tpl' => [
+            'tplLogin' => [
                 'type' => 'textfield',
-                'value' => 'tpl.tLogin.item',
+                'value' => 'tlogin_login',
             ],
-            'sortby' => [
+            'tpllogout' => [
                 'type' => 'textfield',
-                'value' => 'name',
+                'value' => 'tlogin_logout',
             ],
-            'sortdir' => [
-                'type' => 'list',
-                'options' => [
-                    ['text' => 'ASC', 'value' => 'ASC'],
-                    ['text' => 'DESC', 'value' => 'DESC'],
-                ],
-                'value' => 'ASC',
-            ],
-            'limit' => [
-                'type' => 'numberfield',
-                'value' => 10,
-            ],
-            'outputSeparator' => [
-                'type' => 'textfield',
-                'value' => "\n",
-            ],
-            'toPlaceholder' => [
-                'type' => 'combo-boolean',
-                'value' => false,
-            ],
+            
         ],
     ],
 ];

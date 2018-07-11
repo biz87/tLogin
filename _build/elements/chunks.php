@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'tpl.tLogin.item' => [
-        'file' => 'item',
+    'tlogin_login' => [
+        'file' => 'tlogin_login',
         'description' => '',
     ],
-    'tpl.tLogin.office' => [
-        'file' => 'office',
+    'tlogin_logout' => [
+        'file' => 'tlogin_logout',
         'description' => '',
     ],
 ];
