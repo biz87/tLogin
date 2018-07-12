@@ -12,7 +12,7 @@ class tLogin
         $corePath = MODX_CORE_PATH . 'components/tlogin/';
         $modelPath = $corePath . 'model/';
         $this->modx =& $modx;
-        $this->token = $this->modx->getOption('tLogin_bot_token');
+        $this->token = $this->modx->getOption('tlogin_bot_token');
         $this->register = $this->modx->getOption('tlogin_register',null,0);
         $this->modx->addPackage('tlogin', $modelPath);
         $this->modx->lexicon->load('tlogin:default');
@@ -92,11 +92,10 @@ class tLogin
     private function saveTelegramUserData($auth_data)
     {
         $auth_data_json = json_encode($auth_data);
-        //setcookie('tg_user', $auth_data_json);
         if($this->register){
             //Проверяю на существование
             $user = $this->modx->getObject('modUser', array('username' => $auth_data['username']));
-            if($user){
+            if($user && $user->get('id') > 0){
                 $profile = $user->Profile;
                 $userData = array_merge($user->toArray(), $profile->toArray());
                 if(isset($userData['extended']['telegram']['id']) && $userData['extended']['telegram']['id'] == $auth_data['id']){
@@ -106,24 +105,28 @@ class tLogin
                     $this->modx->log(1, '[tLogin] User with username '.$auth_data['username'].' already exists');
                     return;
                 }
+            }else{
+                //Регистрируем
+
+                $user = $this->modx->newObject('modUser');
+                $user->set('username', $auth_data['username']);
+                $user->save();
+
+                $profile = $this->modx->newObject('modUserProfile');
+                $profile->set('fullname', $auth_data['first_name'].' '.$auth_data['last_name']);
+                $profile->set('email', $auth_data['username'].'@fakesite.ru');
+                $profile->set('photo', $auth_data['photo_url']);
+                $extended['telegram'] =  $auth_data;
+                $profile->set('extended', $extended);
+                $user->addOne($profile);
+                $profile->save();
+                $user->save();
+                $user->addSessionContext('web');
+                return;
             }
 
 
-            //Регистрируем
 
-            $user = $this->modx->newObject('modUser');
-            $user->set('username', $auth_data['username']);
-            $user->save();
-
-            $profile = $this->modx->newObject('modUserProfile');
-            $profile->set('fullname', $auth_data['first_name'].' '.$auth_data['last_name']);
-            $profile->set('email', $auth_data['username'].'@fakesite.ru');
-            $profile->set('photo', $auth_data['photo_url']);
-            $extended['telegram'] =  $auth_data;
-            $profile->set('extended', $extended);
-            $user->addOne($profile);
-            $profile->save();
-            $user->save();
         }else{
             //Сохраняем в кэш
             $session = $_COOKIE['PHPSESSID'];
