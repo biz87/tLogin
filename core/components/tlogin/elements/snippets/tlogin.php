@@ -39,7 +39,7 @@ if($user_data = $tLogin->getTelegramUserData()){
 }
 
 //Авторизация
-if(isset($_GET) && !empty($_GET['hash'])){
+if(isset($_GET['hash']) && !empty($_GET['hash'])){
     $id = $modx->resource->id;
     $tLogin->checkUser($_GET, $id);
 }

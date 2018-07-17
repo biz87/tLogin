@@ -91,7 +91,7 @@ class tLogin
             return false;
         }
 
-        return $data_check_arr;
+        return $auth_data;
     }
 
 
