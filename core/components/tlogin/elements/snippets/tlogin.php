@@ -8,6 +8,7 @@ if(!$tLogin){
 $pdo = $modx->getService('pdoTools');
 $loginTpl = $modx->getOption('tplLogin', $scriptProperties, 'tlogin_login');
 $logoutTpl = $modx->getOption('tpllogout', $scriptProperties, 'tlogin_logout');
+$logout_id = $modx->getOption('logout_id', $scriptProperties, $modx->resource->id);
 $register = $modx->getOption('tlogin_register',null,0);
 
 //Обработка ссылки Выход
@@ -17,8 +18,6 @@ if(isset($_GET['logout'])){
         if ($response->isError()) {
             $modx->log(modX::LOG_LEVEL_ERROR, '[tLogin] Logout error. Message: '.$response->getMessage());
         }
-        $url = $modx->makeUrl($modx->getOption('site_start'));
-        $modx->sendRedirect($url);
     }else{
         $session = $_COOKIE['PHPSESSID'];
         $options = array(
@@ -26,11 +25,7 @@ if(isset($_GET['logout'])){
         );
         $modx->cacheManager->delete($session, $options);
     }
-    if(intval($_GET['logout']) > 0){
-        $url = $modx->makeUrl(intval($_GET['logout']));
-    }else{
-        $url = $modx->makeUrl($modx->resource->id);
-    }
+    $url = $modx->makeUrl($logout_id);
     $modx->sendRedirect($url);
 }
 

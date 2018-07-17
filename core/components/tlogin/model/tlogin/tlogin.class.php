@@ -64,10 +64,13 @@ class tLogin
     private function checkTelegramAuthorization($auth_data)
     {
         $check_hash = $auth_data['hash'];
+        $allow_key= array('username' , 'auth_date' ,'first_name', 'last_name' ,'photo_url' ,'id');
         unset($auth_data['hash']);
         $data_check_arr = [];
         foreach ($auth_data as $key => $value) {
-            $data_check_arr[] = $key . '=' . $value;
+            if( in_array( $key , $allow_key)){
+                $data_check_arr[] = $key . '=' . $value;
+            }
         }
 
         sort($data_check_arr);
