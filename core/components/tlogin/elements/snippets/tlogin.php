@@ -6,10 +6,13 @@ if(!$tLogin){
 }
 
 $pdo = $modx->getService('pdoTools');
+$pdo = $modx->getService('pdoTools');
 $loginTpl = $modx->getOption('tplLogin', $scriptProperties, 'tlogin_login');
 $logoutTpl = $modx->getOption('tplLogout', $scriptProperties, 'tlogin_logout');
 $logout_id = $modx->getOption('logout_id', $scriptProperties, $modx->resource->id);
-$register = $modx->getOption('tlogin_register',null,0);
+if(empty($logout_id)){
+    $logout_id = $modx->resource->id;
+}
 
 //Обработка ссылки Выход
 if(isset($_GET['logout'])){
@@ -36,8 +39,8 @@ if($user_data = $tLogin->getTelegramUserData()){
 
 //Авторизация
 if(isset($_GET) && !empty($_GET['hash'])){
-    $uri = $modx->resource->get('uri');
-    $tLogin->checkUser($_GET, $uri);
+    $id = $modx->resource->id;
+    $tLogin->checkUser($_GET, $id);
 }
 
 return $pdo->getChunk($loginTpl);

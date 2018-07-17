@@ -21,12 +21,13 @@ class tLogin
 
 
 
-    public function checkUser(array $data = array(), $uri)
+    public function checkUser(array $data = array(), $id)
     {
         if(count($data) == 0){return;}
         try {
             $auth_data = $this->checkTelegramAuthorization($data);
             $this->saveTelegramUserData($auth_data);
+            $uri = $this->modx->makeUrl($id);
             $this->modx->sendRedirect($uri);
         } catch (Exception $e) {
             $this->modx->log(1,  '[tLogin] '.$e->getMessage());
