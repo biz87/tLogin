@@ -6,10 +6,10 @@ if(!$tLogin){
 }
 
 $pdo = $modx->getService('pdoTools');
-$pdo = $modx->getService('pdoTools');
 $loginTpl = $modx->getOption('tplLogin', $scriptProperties, 'tlogin_login');
 $logoutTpl = $modx->getOption('tplLogout', $scriptProperties, 'tlogin_logout');
 $logout_id = $modx->getOption('logout_id', $scriptProperties, $modx->resource->id);
+$register = $modx->getOption('tlogin_register',null,0);
 if(empty($logout_id)){
     $logout_id = $modx->resource->id;
 }
@@ -28,6 +28,7 @@ if(isset($_GET['logout'])){
         );
         $modx->cacheManager->delete($session, $options);
     }
+
     $url = $modx->makeUrl($logout_id);
     $modx->sendRedirect($url);
 }
