@@ -9,7 +9,7 @@ return [
                 'type' => 'textfield',
                 'value' => 'tlogin_login',
             ],
-            'tpllogout' => [
+            'tplLogout' => [
                 'type' => 'textfield',
                 'value' => 'tlogin_logout',
             ],

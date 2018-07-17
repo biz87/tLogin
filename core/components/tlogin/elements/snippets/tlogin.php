@@ -7,7 +7,7 @@ if(!$tLogin){
 
 $pdo = $modx->getService('pdoTools');
 $loginTpl = $modx->getOption('tplLogin', $scriptProperties, 'tlogin_login');
-$logoutTpl = $modx->getOption('tpllogout', $scriptProperties, 'tlogin_logout');
+$logoutTpl = $modx->getOption('tplLogout', $scriptProperties, 'tlogin_logout');
 $logout_id = $modx->getOption('logout_id', $scriptProperties, $modx->resource->id);
 $register = $modx->getOption('tlogin_register',null,0);
 
