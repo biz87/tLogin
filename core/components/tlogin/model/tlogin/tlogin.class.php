@@ -26,7 +26,9 @@ class tLogin
         if(count($data) == 0){return;}
         try {
             $auth_data = $this->checkTelegramAuthorization($data);
-            $this->saveTelegramUserData($auth_data);
+            if(is_array($auth_data)){
+                $this->saveTelegramUserData($auth_data);
+            }
             $uri = $this->modx->makeUrl($id);
             $this->modx->sendRedirect($uri);
         } catch (Exception $e) {
@@ -81,21 +83,20 @@ class tLogin
 
         if (strcmp($hash, $check_hash) !== 0) {
             $this->modx->log(1, '[tLogin] Data is NOT from Telegram. Check bot  token');
-            return;
+            return false;
         }
 
         if ((time() - $auth_data['auth_date']) > 86400) {
             $this->modx->log(1, '[tLogin] Data is outdated');
-            return;
+            return false;
         }
 
-        return $auth_data;
+        return $data_check_arr;
     }
 
 
     private function saveTelegramUserData($auth_data)
     {
-        $auth_data_json = json_encode($auth_data);
         if($this->register){
             //Проверяю на существование
             $user = $this->modx->getObject('modUser', array('username' => $auth_data['username']));
