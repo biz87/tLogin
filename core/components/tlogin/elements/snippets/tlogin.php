@@ -35,6 +35,7 @@ if(isset($_GET['logout'])){
 
 //Проверяю текущую авторизацию
 if($user_data = $tLogin->getTelegramUserData()){
+    $user_data['logout_id'] = $logout_id;
     return $pdo->getChunk($logoutTpl, $user_data);
 }
 
