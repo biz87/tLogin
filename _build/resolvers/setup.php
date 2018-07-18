@@ -10,7 +10,7 @@ $modx =& $transport->xpdo;
 $packages = [
     'pdoTools' => [
         'version' => '2.11.0-pl',
-        'service_url' => 'modx.com ',
+        'service_url' => 'https://rest.modx.com/extras/',
     ],
 ];
 
